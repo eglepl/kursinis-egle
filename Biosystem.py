@@ -208,16 +208,24 @@ class BioSystem:
 
     ## Run a simulation of the Biosystem.
     #  @param self The object pointer.
-    #  @param tspan Time interval to simulate, for example [t0, t1].
+    #  @param tspan Time interval to simulate, for example [t0, t1],
+    #   if contains more than 2 elements it will be used as time points
+    #   to calculate values.
+    #  @param sample_count (optional) number of points to sample solutioin,
+    #   for example 100, default value is 100
     #  @return Tuple (T, Y), where T - time point list, Y - matrix consisting
     #  of Compositor values at a time points.
-    def run(self, tspan):
+    def run(self, tspan, sample_count=1000):
         self.determine_rates()
         y0 = []
         for c in self.compositors:
             y0.append(c.value)
-        delta = max(int(tspan[1] - tspan[0]) * 17, 1000);
-        t = np.linspace(tspan[0], tspan[1], delta)
+
+        if len(tspan) == 2:
+            t = np.linspace(tspan[0], tspan[1], sample_count)
+        else:
+            t = tspan
+
         y = odeint(self.sys_ode, y0, t)
         return (t, y)
 
