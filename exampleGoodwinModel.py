@@ -58,7 +58,7 @@ Y = None
 (T, Y) = sys.run([0, 1000])
 
 Z = np.concatenate((np.vstack(T), Y), axis=1)
-#np.savetxt('goodwin_model_pyhton.csv', Z, fmt='%10.10f')
+# p.savetxt('goodwin_model_pyhton.csv', Z, fmt='%10.10f')
 
 # T - time points of the simulation.
 # Y - a matrix, rows shows the substance concentrations at particular time

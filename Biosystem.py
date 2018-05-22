@@ -159,6 +159,8 @@ class BioSystem:
                 substitutions = zip(constant_syms, constant_vals)
                 ## Convert Compositor rate string/formula to sympy expression
                 #  and substitute all constants with its values.
+                #print k.rate
+                #print substitutions
                 symexpr = sympify(k.rate).subs(substitutions)
                 ## Convert sympy expression to python function with arguments:
                 #  time, compositor1_name, compositor2_name, ...
@@ -316,7 +318,7 @@ class BioSystem:
     #  @return Tuple (T, Y), where T - time point list, Y - matrix consisting
     #  of Compositor values at a time points.
 
-    def run_pulses(self, pulse_series):
+    def run_pulses(self, pulse_series, sample_count=1000):
         num_pulses = len(pulse_series)
 
         T = []
@@ -332,7 +334,7 @@ class BioSystem:
 
             sim_length = pulse_series[i+1].time - pulse.time
             tspan = [prev_end, prev_end + sim_length]
-            (T_sim, Y_sim) = self.run(tspan)
+            (T_sim, Y_sim) = self.run(tspan, sample_count)
 
 
             T = T + list(T_sim[2:])
