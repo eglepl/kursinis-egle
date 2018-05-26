@@ -1,15 +1,16 @@
 import sys
 sys.path.append('./src')
 
-import PythonBiosystemFramework as pbf
+import PythonBiosystemFramework.stochastic as pbfs
 import matplotlib.pyplot as plt
 
+
 # Create a BioSystem to simulate.
-sys = pbf.StochasticBioSystem()
+sys = pbfs.BioSystem()
 
 # Add the constant 'k' with a value 0.05.
 # This will be the speed of the chemical reaction.
-sys.addConstant('C1', 0.0)
+sys.addConstant('C1', 0.5)
 sys.addConstant('C11', 0.5)
 sys.addConstant('C2', 1)
 sys.addConstant('C21', 0.1)
@@ -31,28 +32,28 @@ dEdt = sys.addCompositor('E', 0)
 # [dAdt, dBdt, dEdt],
 # [pbf.Rate('-k * A * E'), pbf.Rate('k * A * E'), pbf.Rate('0')])
 
-reaction2 = pbf.StochasticPart(
+reaction2 = pbfs.SimplePart(
     '* -c> 2A',
     [dAdt, dBdt, dEdt],
     [2, 0, 0],
     '1 * C1'
 )
 
-reaction21 = pbf.StochasticPart(
+reaction21 = pbfs.SimplePart(
     'A -c> *',
     [dAdt, dBdt, dEdt],
     [-1, 0, 0],
     'A * C11'
 )
 
-reaction3 = pbf.StochasticPart(
+reaction3 = pbfs.SimplePart(
     '* -A-> B',
     [dAdt, dBdt, dEdt],
     [0, 1, 0],
     'A * C2'
 )
 
-reaction31 = pbf.StochasticPart(
+reaction31 = pbfs.SimplePart(
     'B -c> *',
     [dAdt, dBdt, dEdt],
     [0, -1, 0],
@@ -69,8 +70,11 @@ sys.addPart(reaction31)
 T = None
 Y = None
 
+
+sys.max_accuracy = True
 # Simulate system with provided reactions for 25 seconds.
-(T, Y) = sys.run([0, 60])
+(T, Y) = sys.run([0, 200])
+
 
 # T - time points of the simulation.
 # Y - a matrix, rows shows the substance concentrations at particular time
@@ -82,10 +86,10 @@ plt.figure()
 # x and y directions respectively.
 plt.margins(0.05, 0.1)
 plt.grid(True)
-plt.plot(T, Y[:, sys.compositorIndex('A')], label="A")
+plt.plot(T, Y[:, sys.compositorIndex('A')], '-', label="A")
 plt.plot(T, Y[:, sys.compositorIndex('B')], label="B")
 #plt.plot(T, Y[:, sys.compositorIndex('E')], label="E")
 plt.legend()
 plt.xlabel('Time')
 plt.ylabel('Molecules')
-plt.show()
+#plt.show()

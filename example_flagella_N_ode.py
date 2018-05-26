@@ -1,13 +1,13 @@
 import sys
 sys.path.append('./src')
 
-import PythonBiosystemFramework as pbf
+import PythonBiosystemFramework.ode as pbfo
 import matplotlib.pyplot as plt
 from scipy.stats import *
 import numpy as np
 
 # Create a BioSystem to simulate.
-sys = pbf.BioSystem()
+sys = pbfo.BioSystem()
 
 # Add the constant 'k' with a value 0.05.
 # This will be the speed of the chemical reaction.
@@ -27,10 +27,10 @@ dNdt = sys.addCompositor('NN', 1900)# 100, 400, 900
 #   L - length
 #   a - length of the part
 #   N - number of parts
-reaction = pbf.OdePart(
+reaction = pbfo.Part(
     'Flagella Length',
     [dNdt],
-    [pbf.Rate('(MM * vv / (2 * aa * NN)) - (VV / aa)')])
+    [pbfo.Rate('(MM * vv / (2 * aa * NN)) - (VV / aa)')])
 
 # Add the reaction to the simulation.
 sys.addPart(reaction)
@@ -45,7 +45,7 @@ Y = None
 # save the result
 TY = np.concatenate((np.vstack(T), Y), axis=1)
 print(TY)
-np.savetxt("flagella_N_1900_ode.csv", TY, delimiter=';')
+np.savetxt("flagella_N_1900_ode_v2.csv", TY, delimiter=';')
 
 # T - time points of the simulation.
 # Y - a matrix, rows shows the substance concentrations at particular time

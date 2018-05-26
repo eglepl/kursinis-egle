@@ -5,7 +5,7 @@ import PythonBiosystemFramework as pbf
 import matplotlib.pyplot as plt
 
 # Create a BioSystem to simulate.
-sys = pbf.StochasticBioSystem()
+sys = pbf.BioSystem()
 
 # Add the constant 'k' with a value 0.05.
 # This will be the speed of the chemical reaction.
@@ -31,33 +31,70 @@ dEdt = sys.addCompositor('E', 0)
 # [dAdt, dBdt, dEdt],
 # [pbf.Rate('-k * A * E'), pbf.Rate('k * A * E'), pbf.Rate('0')])
 
-reaction2 = pbf.StochasticPart(
-    '* -c> 2A',
-    [dAdt, dBdt, dEdt],
-    [2, 0, 0],
-    '1 * C1'
-)
+class P2Event(pbf.StochasticPart):
 
-reaction21 = pbf.StochasticPart(
-    'A -c> *',
-    [dAdt, dBdt, dEdt],
-    [-1, 0, 0],
-    'A * C11'
-)
+    def process(self, y, c):
+        y['A'] += 2
+        return y
 
-reaction3 = pbf.StochasticPart(
-    '* -A-> B',
-    [dAdt, dBdt, dEdt],
-    [0, 1, 0],
-    'A * C2'
-)
+    def get_rate(self, y, c):
+        return c['C1']
 
-reaction31 = pbf.StochasticPart(
-    'B -c> *',
-    [dAdt, dBdt, dEdt],
-    [0, -1, 0],
-    'B * C21'
-)
+reaction2 = P2Event("* -c-> 2A")
+# reaction2 = pbf.StochasticPart(
+#     '* -c> 2A',
+#     [dAdt, dBdt, dEdt],
+#     [2, 0, 0],
+#     '1 * C1'
+# )
+
+class P21Event(pbf.StochasticPart):
+    def process(self, y, c):
+        y['A'] -= 1
+        return y
+
+    def get_rate(self, y, c):
+        return y['A'] * c['C11']
+
+reaction21 = P21Event("A -c-> *")
+# reaction21 = pbf.StochasticPart(
+#     'A -c> *',
+#     [dAdt, dBdt, dEdt],
+#     [-1, 0, 0],
+#     'A * C11'
+# )
+
+class P3Event(pbf.StochasticPart):
+    def process(self, X, C):
+        X['B'] += 1
+        return X
+
+    def get_rate(self, X, C):
+        return X['A'] * C['C2']
+
+reaction3 = P3Event("A -c-> *")
+# reaction3 = pbf.StochasticPart(
+#     '* -A-> B',
+#     [dAdt, dBdt, dEdt],
+#     [0, 1, 0],
+#     'A * C2'
+# )
+
+class P31Event(pbf.StochasticPart):
+    def process(self, X, C):
+        X['B'] -= 1
+        return X
+
+    def get_rate(self, X, C):
+        return X['B'] * C['C21']
+
+reaction31 = P2Event("B -c21-> *")
+# reaction31 = pbf.StochasticPart(
+#     'B -c> *',
+#     [dAdt, dBdt, dEdt],
+#     [0, -1, 0],
+#     'B * C21'
+# )
 
 # Add the reaction to the simulation.
 sys.addPart(reaction2)
@@ -84,7 +121,6 @@ plt.margins(0.05, 0.1)
 plt.grid(True)
 plt.plot(T, Y[:, sys.compositorIndex('A')], label="A")
 plt.plot(T, Y[:, sys.compositorIndex('B')], label="B")
-#plt.plot(T, Y[:, sys.compositorIndex('E')], label="E")
 plt.legend()
 plt.xlabel('Time')
 plt.ylabel('Molecules')

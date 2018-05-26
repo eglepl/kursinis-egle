@@ -1,12 +1,11 @@
+import sys
+sys.path.append('./src')
 
-from Biosystem import *
-from Part import *
-from Rate import *
-from Pulse import *
+import PythonBiosystemFramework as pbf
 import matplotlib.pyplot as plt
 
 # Create a BioSystem to simulate.
-sys = BioSystem()
+sys = pbf.BioSystem()
 
 # Add the constant 'k' with a value 0.05.
 # This will be the speed of the chemical reaction.
@@ -24,10 +23,18 @@ dEdt = sys.addCompositor('E', 1)
 # concentration of substances.
 # Substance B increases by the law 'k * A * E' (as much as A decreases).
 # Substance E is a catalyst, so, its concentration doesn't change.
-reaction  = Part(
+reaction  = pbf.OdePart(
 'A + E -k> B + E',
 [dAdt, dBdt, dEdt],
-[Rate('-k * A * E'), Rate('k * A * E'), Rate('0')])
+[pbf.Rate('-k * A * E'), pbf.Rate('k * A * E'), pbf.Rate('0')])
+
+# reaction2 = StochasticPart(example.py
+#     'A + A -c> 2B',
+#     [dAdt, dBdt, dEdt],
+#     [-2, 2, 0],
+#     'A * (A - 1) / 2.0'
+#     'C1'
+# )
 
 # Add the reaction to the simulation.
 sys.addPart(reaction)
@@ -37,7 +44,7 @@ T = None
 Y = None
 
 # Simulate system with provided reactions for 25 seconds.
-(T, Y) = sys.run([0, 25])
+(T, Y) = sys.run([0, 25], 1000)
 
 # T - time points of the simulation.
 # Y - a matrix, rows shows the substance concentrations at particular time

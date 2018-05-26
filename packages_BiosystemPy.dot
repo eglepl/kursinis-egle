@@ -1,0 +1,12 @@
+digraph "packages_BiosystemPy" {
+charset="utf-8"
+rankdir=BT
+"0" [label="Biosystem", shape="box"];
+"1" [label="Compositor", shape="box"];
+"2" [label="Const", shape="box"];
+"3" [label="Part", shape="box"];
+"4" [label="Pulse", shape="box"];
+"5" [label="Rate", shape="box"];
+"0" -> "1" [arrowhead="open", arrowtail="none"];
+"0" -> "2" [arrowhead="open", arrowtail="none"];
+}

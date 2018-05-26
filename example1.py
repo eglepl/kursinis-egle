@@ -9,14 +9,14 @@ sys = pbf.StochasticBioSystem()
 
 # Add the constant 'k' with a value 0.05.
 # This will be the speed of the chemical reaction.
-sys.addConstant('C1', 1)
+sys.addConstant('C1', 0.0)
 sys.addConstant('C11', 0.5)
-sys.addConstant('C2', 2)
+sys.addConstant('C2', 1)
 sys.addConstant('C21', 0.1)
 
 # Let's define substances: A, B, E
 # with initial contration values: 10, 0, 1
-dAdt = sys.addCompositor('A', 0)
+dAdt = sys.addCompositor('A', 100)
 dBdt = sys.addCompositor('B', 0)
 dEdt = sys.addCompositor('E', 0)
 
@@ -70,7 +70,7 @@ T = None
 Y = None
 
 # Simulate system with provided reactions for 25 seconds.
-(T, Y) = sys.run([0, 20])
+(T, Y) = sys.run([0, 60])
 
 # T - time points of the simulation.
 # Y - a matrix, rows shows the substance concentrations at particular time

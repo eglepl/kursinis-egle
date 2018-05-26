@@ -1,0 +1,43 @@
+digraph "classes_BiosystemPy" {
+charset="utf-8"
+rankdir=BT
+"0" [label="{Atom|is_Atom : bool\l|class_key()\ldoit()\lmatches()\lsort_key()\lxreplace()\l}", shape="record"];
+"1" [label="{AtomicExpr|is_Atom : bool\lis_number : bool\l|}", shape="record"];
+"2" [label="{Basic|args\lassumptions0\lauto : bool\lcanonical_variables\lfree_symbols\lfun\lfunc\lgens : tuple\lindex\lis_Add : bool\lis_AlgebraicNumber : bool\lis_Atom : bool\lis_Boolean : bool\lis_Derivative : bool\lis_Dummy : bool\lis_Equality : bool\lis_Float : bool\lis_Function : bool\lis_Integer : bool\lis_Matrix : bool\lis_Mul : bool\lis_Not : bool\lis_Number : bool\lis_NumberSymbol : bool\lis_Order : bool\lis_Piecewise : bool\lis_Point : bool\lis_Poly : bool\lis_Pow : bool\lis_Rational : bool\lis_Relational : bool\lis_Symbol : bool\lis_Vector : bool\lis_Wild : bool\lis_comparable\lis_number : bool\lname\lpoly\lrep\l|as_content_primitive()\las_poly()\latoms()\lclass_key()\lcompare()\lcopy()\lcount()\lcount_ops()\ldoit()\ldummy_eq()\lfind()\lfromiter()\lhas()\lis_hypergeometric()\lmatch()\lmatches()\lrcall()\lreplace()\lrewrite()\lsort_key()\lsubs()\lxreplace()\l}", shape="record"];
+"3" [label="{BioSystem|compositors : list\lconstants : list\lmap_compositors : dict\lmap_constants : dict\lparts : list\lrates_determined : bool\lsymbols : list\l|addCompositor()\laddConstant()\laddPart()\lchangeConstantValue()\lchangeInitialValue()\lcompositorIndex()\ldetermine_rates()\linterpolate_traces()\lreset_rates()\lreset_state_variables()\lrun()\lrun_pulses()\lsys_ode()\ltime_to_index()\l}", shape="record"];
+"4" [label="{Boolean|\l|equals()\l}", shape="record"];
+"5" [label="{Compositor|init_value : int\lname\lrate : str\lsym\lvalue : int\l|addRate()\lsetInitialValue()\l}", shape="record"];
+"6" [label="{Const|name\lsym\lvalue : int\l|}", shape="record"];
+"7" [label="{EvalfMixin|n\l|evalf()\l}", shape="record"];
+"8" [label="{Expr|is_number\l|adjoint()\lapart()\largs_cnc()\las_base_exp()\las_coeff_Add()\las_coeff_Mul()\las_coeff_add()\las_coeff_exponent()\las_coeff_mul()\las_coefficient()\las_coefficients_dict()\las_content_primitive()\las_expr()\las_independent()\las_leading_term()\las_numer_denom()\las_ordered_factors()\las_ordered_terms()\las_powers_dict()\las_real_imag()\las_terms()\lcancel()\lcoeff()\lcollect()\lcombsimp()\lcompute_leading_term()\lconjugate()\lcould_extract_minus_sign()\lcount_ops()\ldiff()\lequals()\lexpand()\lextract_additively()\lextract_branch_factor()\lextract_multiplicatively()\lfactor()\lfourier_series()\lfps()\lgetO()\lgetn()\lintegrate()\linvert()\lis_algebraic_expr()\lis_constant()\lis_polynomial()\lis_rational_function()\lleadterm()\llimit()\llseries()\lnormal()\lnseries()\lnsimplify()\lpowsimp()\lprimitive()\lradsimp()\lratsimp()\lrefine()\lremoveO()\lround()\lseparate()\lseries()\lsimplify()\lsort_key()\ltaylor_term()\ltogether()\ltranspose()\ltrigsimp()\l}", shape="record"];
+"9" [label="{FactKB|rules\l|deduce_all_facts()\l}", shape="record"];
+"10" [label="{FactRules|beta_rules : list\lbeta_triggers\ldefined_facts : set\lfull_implications\lprereq\l|}", shape="record"];
+"11" [label="{Part|compositors\lname\lrates\l|}", shape="record"];
+"12" [label="{Poly|args\ldomain\lfree_symbols\lfree_symbols_in_domain\lgen\lis_Poly : bool\lis_commutative : bool\lis_cyclotomic\lis_ground\lis_homogeneous\lis_irreducible\lis_linear\lis_monic\lis_monomial\lis_multivariate\lis_one\lis_primitive\lis_quadratic\lis_sqf\lis_univariate\lis_zero\lone\lunit\lzero\l|EC()\lEM()\lET()\lLC()\lLM()\lLT()\lTC()\labs()\ladd()\ladd_ground()\lall_coeffs()\lall_monoms()\lall_roots()\lall_terms()\las_dict()\las_expr()\las_list()\lcancel()\lclear_denoms()\lcoeff()\lcoeff_monomial()\lcoeffs()\lcofactors()\lcompose()\lcontent()\lcount_roots()\ldecompose()\ldeflate()\ldegree()\ldegree_list()\ldiff()\ldiscriminant()\ldispersion()\ldispersionset()\ldiv()\leject()\leq()\leval()\lexclude()\lexquo()\lexquo_ground()\lfactor_list()\lfactor_list_include()\lfrom_dict()\lfrom_expr()\lfrom_list()\lfrom_poly()\lgcd()\lgcdex()\lget_domain()\lget_modulus()\lgff_list()\lground_roots()\lhalf_gcdex()\lhas_only_gens()\lhomogeneous_order()\lhomogenize()\linject()\lintegrate()\lintervals()\linvert()\ll1_norm()\llcm()\llength()\llift()\lltrim()\lmax_norm()\lmonic()\lmonoms()\lmul()\lmul_ground()\lne()\lneg()\lnew()\lnroots()\lnth()\lnth_power_roots_poly()\lpdiv()\lper()\lpexquo()\lpow()\lpquo()\lprem()\lprimitive()\lquo()\lquo_ground()\lrat_clear_denoms()\lreal_roots()\lrefine_root()\lrem()\lreorder()\lreplace()\lresultant()\lretract()\lrevert()\lroot()\lset_domain()\lset_modulus()\lshift()\lslice()\lsqf_list()\lsqf_list_include()\lsqf_norm()\lsqf_part()\lsqr()\lsturm()\lsub()\lsub_ground()\lsubresultants()\lterms()\lterms_gcd()\ltermwise()\lto_exact()\lto_field()\lto_ring()\ltotal_degree()\ltrunc()\lunify()\l}", shape="record"];
+"13" [label="{Pulse|compositor_name\ltime\lvalue\l|}", shape="record"];
+"14" [label="{PurePoly|free_symbols\l|}", shape="record"];
+"15" [label="{Rate|rate_string\l|}", shape="record"];
+"16" [label="{StdFactKB|generator\lrules\l|copy()\l}", shape="record"];
+"17" [label="{Symbol|assumptions0\lfree_symbols\lis_Symbol : bool\lis_comparable : bool\lname\l|as_dummy()\las_real_imag()\lis_constant()\lsort_key()\l}", shape="record"];
+"18" [label="{defaultdict|default_factory : NoneType\l|}", shape="record"];
+"0" -> "2" [arrowhead="empty", arrowtail="none"];
+"1" -> "0" [arrowhead="empty", arrowtail="none"];
+"1" -> "8" [arrowhead="empty", arrowtail="none"];
+"4" -> "2" [arrowhead="empty", arrowtail="none"];
+"8" -> "2" [arrowhead="empty", arrowtail="none"];
+"8" -> "7" [arrowhead="empty", arrowtail="none"];
+"12" -> "8" [arrowhead="empty", arrowtail="none"];
+"14" -> "12" [arrowhead="empty", arrowtail="none"];
+"16" -> "9" [arrowhead="empty", arrowtail="none"];
+"17" -> "1" [arrowhead="empty", arrowtail="none"];
+"17" -> "4" [arrowhead="empty", arrowtail="none"];
+"10" -> "16" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="rules", style="solid"];
+"14" -> "2" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="poly", style="solid"];
+"16" -> "2" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="_assumptions", style="solid"];
+"16" -> "17" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="_assumptions", style="solid"];
+"17" -> "5" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="sym", style="solid"];
+"17" -> "6" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="sym", style="solid"];
+"18" -> "10" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="full_implications", style="solid"];
+"18" -> "10" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="prereq", style="solid"];
+"18" -> "10" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="beta_triggers", style="solid"];
+}
