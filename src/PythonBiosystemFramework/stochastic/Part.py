@@ -34,7 +34,7 @@ class Part:
     #  @return list of updated values of BioSystem compositors, might be a list
     # of sympy expressions (evaluated with BioSystem Compositor, Constants
     # values results updated value).
-    def process(self, y):
+    def process(self, y, t):
         raise NotImplementedError
 
 
@@ -43,5 +43,5 @@ class Part:
     #  @param y current values of the BioSystem Compositors
     #  @return stochastic rate of current part, might be sympy expression (
     # evaluated with BioSystem values results rate).
-    def get_rate(self, y):
+    def get_rate(self, y, t):
         raise NotImplementedError

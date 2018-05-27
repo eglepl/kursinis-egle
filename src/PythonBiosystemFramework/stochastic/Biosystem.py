@@ -3,6 +3,7 @@
 import numpy as np
 import PythonBiosystemFramework.BiosystemBase as b
 from PythonBiosystemFramework.stochastic.Compositor import Compositor
+import random
 
 ## Biological system to simulate stochastic
 #
@@ -113,19 +114,26 @@ class BioSystem(b.BioSystemBase):
         t = sample_at[0]
         t_end = sample_at[-1]
 
-        result_t = np.empty((0, 1))
-        result_y = np.empty((0, len(y0)))
+        # result_t = np.empty((0, 1))
+        # result_y = np.empty((0, len(y0)))
+        result_t = []
+        result_y = []
 
         while True:
             if self.max_accuracy:
                 if y0_before:
-                    result_t = np.vstack([result_t, [t]])
-                    result_y = np.vstack((result_y, y0_before))
-                result_t = np.vstack([result_t, [t]])
-                result_y = np.vstack((result_y, y0))
+                    # result_t = np.vstack([result_t, [t]])
+                    # result_y = np.vstack((result_y, y0_before))
+                    result_t.append(t)
+                    result_y.append(y0_before)
+                # result_t = np.vstack([result_t, [t]])
+                # result_y = np.vstack((result_y, y0))
+                result_t.append(t)
+                result_y.append(y0)
             else:
                 while (sample_i < len(sample_at)) and (t >= sample_at[sample_i]):
-                    result_y = np.vstack((result_y, y0))
+                    #result_y = np.vstack((result_y, y0))
+                    result_y.append(y0)
                     sample_i += 1
 
             if t >= t_end:
@@ -142,10 +150,12 @@ class BioSystem(b.BioSystemBase):
                 y0_before = list(y0)
                 t = sample_at[-1]
 
+        result_y_array = np.array(result_y)
+
         if self.max_accuracy:
-            self.result = (result_t, result_y)
+            self.result = (result_t, result_y_array)
         else:
-            self.result = (sample_at, result_y)
+            self.result = (sample_at, result_y_array)
 
         return self.result
 
@@ -156,8 +166,10 @@ class BioSystem(b.BioSystemBase):
             return None
 
         s_dt = np.random.exponential(1.0 / a)
-        part_idx = np.random.choice(len(parts_a), 1, p=[pa / a for pa in
-                                                        parts_a]).item(0)
+        #part_idx = np.random.choice(len(parts_a), 1, p=[pa / a for pa in
+        #                                                parts_a]).item(0)
+        part_idx = self.choice([pa / a for pa in parts_a])
+
         return s_dt, part_idx
 
     def determine_parts_rates(self, y, t):
@@ -174,3 +186,12 @@ class BioSystem(b.BioSystemBase):
         constant_vals = list(map((lambda c: c.value), self.constants))
         ## Pairs of symbols and its value.
         self.constant_substitutions = zip(constant_syms, constant_vals)
+
+    def choice(self, p):
+        r = random.random()
+        psum = 0
+        for i in range(0, len(p)):
+            psum += p[i]
+            if psum >= r:
+                return i
+        return len(p) - 1

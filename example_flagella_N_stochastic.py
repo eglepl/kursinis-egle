@@ -5,6 +5,8 @@ import PythonBiosystemFramework.stochastic as pbfs
 import matplotlib.pyplot as plt
 from scipy.stats import *
 import numpy as np
+from datetime import datetime
+from random import *;
 
 # Create a BioSystem to simulate.
 sys = pbfs.BioSystem()
@@ -22,7 +24,7 @@ sys.addConstant('Lavg', 12.727e-6) # Average length of Flagellar, m
 sys.addConstant('Navg', 1272.7) # Average number of units in Flagellar, #
 
 sys.addConstant('IFT_init_pos', 0) # Initial value for all IFT state
-sys.addConstant('NN', 1900) # Initial Flagellar length in units
+sys.addConstant('NN', 100) # Initial Flagellar length in units
 
 #####################################################################
 ## Define initial states
@@ -96,7 +98,7 @@ class IFTMovePart(pbfs.Part):
             return self.lmb_p
         else:
             return self.lmb_m
-
+        
 
 IFT_move_parts = {}
 for i in range(0, sys.getConstantValue('M')):
@@ -115,26 +117,37 @@ sys.addPart(disassembly_part)
 T = None
 Y = None
 
+
+t_end = 15000
 # Simulate system with provided reactions for 15000 seconds.
-(T, Y) = sys.run([0, 5000])
+(T, Y) = sys.run([0, t_end])
 
 # save the result
 TY = np.concatenate((np.vstack(T), Y), axis=1)
 #print(TY)
-np.savetxt("flagella_N_1900_stoch_v1.csv", TY, delimiter=';')
+#print(TY)
+#np.savetxt("flagella_N_1900_stoch_0-10_v1.csv", TY, delimiter=';',
+# fmt='%10.5f')
+
+filename = "output/Table5/flagella_N_" + str(sys.getConstantValue('NN'))
+filename += "_stoch_0-" + str(t_end)
+filename += "_" + datetime.now().strftime("%Y%m%dT%H%M%S")
+filename += "_" + str(randrange(100000))
+filename += ".csv"
+np.savetxt(filename, TY, delimiter=';', fmt='%10.5f')
 
 # T - time points of the simulation.
 # Y - a matrix, rows shows the substance concentrations at particular time
 # point, columns - substance concentrations change in time.
-
-# Plot the simulation data.
-plt.figure()
-# Create a 5% (0.05) and 10% (0.1) padding in the
-# x and y directions respectively.
-plt.margins(0.05, 0.1)
-plt.grid(True)
-plt.plot(T, Y[:, sys.compositorIndex('n')], label="Flagellar length in unints, N")
-plt.legend()
-plt.xlabel('Time')
-plt.ylabel('Flagella length in parts')
-plt.show()
+#
+# # Plot the simulation data.
+# plt.figure()
+# # Create a 5% (0.05) and 10% (0.1) padding in the
+# # x and y directions respectively.
+# plt.margins(0.05, 0.1)
+# plt.grid(True)
+# plt.plot(T, Y[:, sys.compositorIndex('n')], label="Flagellar length in unints, N")
+# plt.legend()
+# plt.xlabel('Time')
+# plt.ylabel('Flagella length in parts')
+# plt.show()
