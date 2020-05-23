@@ -1,7 +1,7 @@
 import sys
-sys.path.append('./src')
+sys.path.append('src')
 
-import PythonBiosystemFramework as pbf
+import PythonBiosystemFramework.stochastic as pbf
 import matplotlib.pyplot as plt
 
 # Create a BioSystem to simulate.
@@ -31,7 +31,7 @@ dEdt = sys.addCompositor('E', 0)
 # [dAdt, dBdt, dEdt],
 # [pbf.Rate('-k * A * E'), pbf.Rate('k * A * E'), pbf.Rate('0')])
 
-class P2Event(pbf.StochasticPart):
+class P2Event(pbf.Part):
 
     def process(self, y, c):
         y['A'] += 2
@@ -48,7 +48,7 @@ reaction2 = P2Event("* -c-> 2A")
 #     '1 * C1'
 # )
 
-class P21Event(pbf.StochasticPart):
+class P21Event(pbf.Part):
     def process(self, y, c):
         y['A'] -= 1
         return y
@@ -64,7 +64,7 @@ reaction21 = P21Event("A -c-> *")
 #     'A * C11'
 # )
 
-class P3Event(pbf.StochasticPart):
+class P3Event(pbf.Part):
     def process(self, X, C):
         X['B'] += 1
         return X
@@ -80,7 +80,7 @@ reaction3 = P3Event("A -c-> *")
 #     'A * C2'
 # )
 
-class P31Event(pbf.StochasticPart):
+class P31Event(pbf.Part):
     def process(self, X, C):
         X['B'] -= 1
         return X

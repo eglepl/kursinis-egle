@@ -118,7 +118,7 @@ T = None
 Y = None
 
 
-t_end = 15000
+t_end = 1500
 # Simulate system with provided reactions for 15000 seconds.
 (T, Y) = sys.run([0, t_end])
 
@@ -140,14 +140,14 @@ np.savetxt(filename, TY, delimiter=';', fmt='%10.5f')
 # Y - a matrix, rows shows the substance concentrations at particular time
 # point, columns - substance concentrations change in time.
 #
-# # Plot the simulation data.
-# plt.figure()
-# # Create a 5% (0.05) and 10% (0.1) padding in the
-# # x and y directions respectively.
-# plt.margins(0.05, 0.1)
-# plt.grid(True)
-# plt.plot(T, Y[:, sys.compositorIndex('n')], label="Flagellar length in unints, N")
-# plt.legend()
-# plt.xlabel('Time')
-# plt.ylabel('Flagella length in parts')
-# plt.show()
+# Plot the simulation data.
+plt.figure()
+# Create a 5% (0.05) and 10% (0.1) padding in the
+# x and y directions respectively.
+plt.margins(0.05, 0.1)
+plt.grid(True)
+plt.plot(T, Y[:, sys.compositorIndex('n')], label="Flagellar length in unints, N")
+plt.legend()
+plt.xlabel('Time')
+plt.ylabel('Flagella length in parts')
+plt.show()

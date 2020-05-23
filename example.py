@@ -1,8 +1,10 @@
 import sys
-sys.path.append('./src')
+sys.path.append('src')
 
 import PythonBiosystemFramework as pbf
 import matplotlib.pyplot as plt
+
+print(pbf)
 
 # Create a BioSystem to simulate.
 sys = pbf.BioSystem()
