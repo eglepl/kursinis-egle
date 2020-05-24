@@ -100,6 +100,9 @@ class BioSystemBase:
         self.symbols.append(compositor.sym)
         return compositor
 
+    def getCompositors(self):
+        return self.compositors
+
     ## Get compositor index in the @p compositors with name @p name.
     #  @param self The object pointer.
     #  @param name Existing compositor name.

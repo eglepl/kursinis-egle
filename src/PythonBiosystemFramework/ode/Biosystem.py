@@ -126,6 +126,7 @@ class BioSystem(b.BioSystemBase):
                 #print k.rate
                 #print substitutions
                 symexpr = sympify(k.rate).subs(substitutions)
+                #print(symexpr)
                 ## Convert sympy expression to python function with arguments:
                 #  time, compositor1_name, compositor2_name, ...
                 k.ratef = lambdify(self.symbols, symexpr)

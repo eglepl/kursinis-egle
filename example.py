@@ -4,8 +4,6 @@ sys.path.append('src')
 import PythonBiosystemFramework as pbf
 import matplotlib.pyplot as plt
 
-print(pbf)
-
 # Create a BioSystem to simulate.
 sys = pbf.BioSystem()
 
@@ -44,6 +42,8 @@ sys.addPart(reaction)
 # Initialise time points and substance concentration values.
 T = None
 Y = None
+
+
 
 # Simulate system with provided reactions for 25 seconds.
 (T, Y) = sys.run([0, 25], 1000)

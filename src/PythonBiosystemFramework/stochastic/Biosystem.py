@@ -100,7 +100,7 @@ class BioSystem(b.BioSystemBase):
     #  @return Tuple (T, Y), where T - time point list, Y - matrix consisting
     #  of Compositor values at a time points.
     def _run(self, sample_at):
-
+        ix = 0
         self.setup_constant_substitutions()
         for p in self.parts:
             p.prepare(self)
@@ -144,6 +144,8 @@ class BioSystem(b.BioSystemBase):
                 (s_dt, part_idx) = gillespie_result
                 part = self.parts[part_idx]
                 y0_before = list(y0)
+                #print(str(ix) + ". "+ part.name)
+                ix += 1
                 y0 = part.process(y0, t)
                 t = t + s_dt
             else:
