@@ -291,6 +291,8 @@ class BioSystemBase:
                 self.compositors[self.map_compositors[pulse.compositor_name]].value = pulse.value
 
             sim_length = pulse_series[i+1].time - pulse.time
+            if (sim_length == 0):
+                continue
             tspan = [prev_end, prev_end + sim_length]
             (T_sim, Y_sim) = self.run(tspan, sample_count_per_pulse)
             if len(T) > 0:

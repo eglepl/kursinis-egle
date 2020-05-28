@@ -11,12 +11,6 @@ from datetime import datetime
 from random import *
 from copy import deepcopy
 
-
-
-def print_log(s):
-    #print(s)
-    None
-
 def init_constants(sys):
     sys.addConstant('k', 1) 
     sys.addConstant('_alpha', 0.001) # how much IFT attach rate drops on Flagella length increse

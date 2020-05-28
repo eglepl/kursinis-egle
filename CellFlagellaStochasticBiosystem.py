@@ -24,12 +24,15 @@ class SubCompositorWrapper:
         self.y = y
 
     def get_subname(self, key):
-        name = self.compositor_name + "_" + str(self.index) + "_" + key
+        name = self.compositor_name + "_" + str(int(self.index)) + "_" + key
         #print("Accessing: '" + name + "'")
         return name
 
     def __getitem__(self, key):
-        idx = self.biosystem.compositorIndex(self.get_subname(key))
+        name = self.get_subname(key)
+        idx = self.biosystem.compositorIndex(name)
+        if idx == None:
+            print("Name not found: " + name) 
         return self.y[idx]
 
     def __setitem__(self, key, value):

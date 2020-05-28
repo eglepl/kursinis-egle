@@ -13,57 +13,44 @@ def print_log(s):
     #print(s)
     None
 
-class BioSystem_OdeCellFlagella:
+class BioSystem_OdeCellFlagella(pbfo.BioSystem):
 
     def __init__(self, init_sys):
         # Create a BioSystem to simulate.
-        self.sys = pbfo.BioSystem()
-        init_sys(self.sys)
-        self.setup()
+        pbfo.BioSystem.__init__(self)
+        self.L = []
+        self.B = []
+        init_sys(self)
 
-    def get_sys(self):
-        return self.sys
+    def add_flagella(self, idx, size, b):
+        c_name = 'L' + str(idx)
+        c = self.addCompositor(c_name, size) # Initial value for all Flagella state
+        self.L.append(c)
+        c_name = 'B' + str(idx)
+        c = self.addCompositor(c_name, b) # Initial value for all Flagella state
+        self.B.append(c)
 
     def setup(self):
-        sys = self.sys
+        sys = self
 
+        self.addConstant('_M', len(self.L))
+        self.addConstant('_N', 0)
         # A zone element count
-        A = sys.addCompositor('A', sys.getConstantValue('A_zone_init'))
+        self.A = self.addCompositor('A', sys.getConstantValue('A_zone_init'))
 
-        # Flagella initial state
-        L = list()
-        for j in range(0, sys.getConstantValue('_M')):
-            c_name = 'L' + str(j)
-            c = sys.addCompositor(c_name, 0) # Initial value for all Flagella state
-            L.append(c)
-
-        B = list()
-        for j in range(0, sys.getConstantValue('_M')):
-            c_name = 'B' + str(j)
-            c = sys.addCompositor(c_name, 0) # Initial value for all Flagella state
-            B.append(c)
-
-        for j in range(0, sys.getConstantValue('_M')):
+        for j in range(0, len(self.L)):
             reaction  = pbfo.Part(
             'L increase',
-            [L[j], A],
-            [pbfo.Rate('_beta * (3 / ( (1 / (_lmb_1 / (1 + _alpha * L'+str(j)+'))) + (1/_lmb_p) + (1/_lmb_2) )) * A'), 
-            pbfo.Rate('-_beta * (3 / ( (1 / (_lmb_1 / (1 + _alpha * L'+str(j)+'))) + (1/_lmb_p) + (1/_lmb_2) )) * A')])
+            [self.L[j], self.A],
+            [pbfo.Rate('_beta * (6 / ( (1 / (_lmb_1 / (1 + _alpha * L'+str(j)+'))) + (1/_lmb_p) + (1/_lmb_2) + (1/_lmb_3) + (1/_lmb_m) + (1/_lmb_4) )) * A / (4 + _k * 2 * L' + str(j) + ')'),
+            pbfo.Rate('-_beta * (6 / ( (1 / (_lmb_1 / (1 + _alpha * L'+str(j)+'))) + (1/_lmb_p) + (1/_lmb_2) + (1/_lmb_3) + (1/_lmb_m) + (1/_lmb_4) )) * A / (4 + _k * 2 * L' + str(j) + ')')])
             sys.addPart(reaction)
 
-        for j in range(0, sys.getConstantValue('_M')):
+        for j in range(0, len(self.L)):
             reaction  = pbfo.Part(
             'Tip decompose',
-            [L[j], B[j]],
+            [self.L[j], self.A],
             [pbfo.Rate('-_mu'), pbfo.Rate('_mu')])
-            sys.addPart(reaction)
-
-        for j in range(0, sys.getConstantValue('_M')):
-            reaction  = pbfo.Part(
-            'B decrease, A increase',
-            [B[j], A],
-            [pbfo.Rate('-1 * _beta * (3/ ( (1/_lmb_3) + (1/_lmb_m) + (1/_lmb_4) )) * B' + str(j)), 
-            pbfo.Rate('_beta * (3/ ( (1/_lmb_3) + (1/_lmb_m) + (1/_lmb_4) )) * B' + str(j))])
             sys.addPart(reaction)
 
         return sys
